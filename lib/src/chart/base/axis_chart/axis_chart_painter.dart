@@ -239,8 +239,13 @@ abstract class AxisChartPainter<D extends AxisChartData> extends BaseChartPainte
           final y1 = 0 + getTopOffsetDrawSize(holder);
           final x2 = bothX;
           final y2 = usableViewSize.height + getTopOffsetDrawSize(holder);
-          canvasWrapper.drawDashedLine(
-              Offset(x1, y1), Offset(x2, y2), _gridPaint, flLineStyle.dashArray);
+          // https://issueexplorer.com/issue/imaNNeoFighT/fl_chart/625#19263423
+          try {
+            canvasWrapper.drawDashedLine(Offset(x1, y1), Offset(x2, y2),
+                _gridPaint, flLineStyle.dashArray);
+          } catch (e) {
+            continue;
+          }
         }
         verticalSeek += verticalInterval;
       }
@@ -271,8 +276,13 @@ abstract class AxisChartPainter<D extends AxisChartData> extends BaseChartPainte
           final y1 = bothY;
           final x2 = usableViewSize.width + getLeftOffsetDrawSize(holder);
           final y2 = bothY;
-          canvasWrapper.drawDashedLine(
-              Offset(x1, y1), Offset(x2, y2), _gridPaint, flLine.dashArray);
+          // https://issueexplorer.com/issue/imaNNeoFighT/fl_chart/625#19263423
+          try {
+            canvasWrapper.drawDashedLine(
+                Offset(x1, y1), Offset(x2, y2), _gridPaint, flLine.dashArray);
+          } catch (e) {
+            continue;
+          }
         }
 
         horizontalSeek += horizontalInterval;
